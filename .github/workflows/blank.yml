@@ -44,7 +44,14 @@ jobs:
           OBJECT_VARIABLE: ${{ env.OBJECT_VARIABLE }}
           
       - name: Print Variables
-        run: echo "${{ env.ANOTHER_VARIABLE }}" 
+        run: echo "$ANOTHER_VARIABLE"
+        env:
+          MY_VARIABLE: ${{ env.MY_VARIABLE }}
+          ANOTHER_VARIABLE: ${{ env.ANOTHER_VARIABLE }}
+          YET_ANOTHER_VARIABLE: ${{ env.YET_ANOTHER_VARIABLE }}
+          ARRAY_VARIABLE: ${{ env.ARRAY_VARIABLE }}
+          OBJECT_VARIABLE: ${{ env.OBJECT_VARIABLE }}
+
 
 
 
