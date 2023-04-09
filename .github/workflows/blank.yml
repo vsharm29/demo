@@ -32,13 +32,15 @@ jobs:
           fi
           export variables=$(jq -r . < $variables)
           echo "Variables set from $variables"
-          echo "variables.MY_VARIABLE"
-          echo "$variables.MY_VARIABLE"
-        env:
-          variables: ${{ env.variables }}
-          
-      - name: Print Variables
-        run: echo "${{ env.variables }}"
+      - name: JSON to variables
+        uses: rgarcia-phi/json-to-variables@v1.1.0
+        with:
+          filename: 'variables'
+          prefix: test
+          masked: true
+
+      - name: Show output
+        run: echo "The time was ${{ env.test_MY_VARIABLE }}"
 
 
 
