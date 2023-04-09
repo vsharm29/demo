@@ -30,4 +30,4 @@ jobs:
           variables: ${{ env.variables }}
           
       - name: Print Variables
-        run: echo "Variables file: $variables"
+        run: echo "Variables file: ${variables}"
