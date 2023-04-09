@@ -15,21 +15,22 @@ jobs:
   parse-variables:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+          
       - name: Set Variables
         run: |
           if [[ ${{ github.ref }} == refs/heads/main* ]]; then
-            export VARIABLES=parameters/variables-dev.json
+            export variables=parameters/variables-dev.json
           elif [[ ${{ github.ref }} == refs/heads/test* ]]; then
-            export VARIABLES=parameters/variables-test.json
+            export variables=parameters/variables-test.json
           elif [[ ${{ github.ref }} == refs/heads/production* ]]; then
-            export VARIABLES=parameters/variables-prod.json
+            export variables=parameters/variables-prod.json
           else
-            export VARIABLES=parameters/variables-dev.json
+            export variables=parameters/variables-dev.json
           fi
         env:
-          VARIABLES: ${{ env.VARIABLES }}
-      - name: Manual
-        run: export Hello=233
-
+          variables: ${{ env.variables }}
+          
       - name: Print Variables
-        run: echo "$Hello"
+        run: echo "$variables"
