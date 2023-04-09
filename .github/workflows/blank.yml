@@ -18,20 +18,69 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
           
-      - name: Set Variables
+      - name: Read variables from JSON
+        id: read-json
         run: |
-          if [[ ${{ github.ref }} == refs/heads/main* ]]; then
-            export variables=parameters/variables-dev.json
-          elif [[ ${{ github.ref }} == refs/heads/test* ]]; then
-            export variables=parameters/variables-test.json
-          elif [[ ${{ github.ref }} == refs/heads/production* ]]; then
-            export variables=parameters/variables-prod.json
-          else
-            export variables=parameters/variables-dev.json
-          fi
-          export variables=$(jq -r . < $variables)
+          echo "::set-output name=variables::$(cat parameters/variables.json)"
         env:
           variables: ${{ env.variables }}
           
       - name: Print Variables
-        run: echo "${{ env.variables }}"
+        run: echo "${{ steps.read-json.outputs.variables }}"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# name: Demo
+
+# on:
+#   push:
+#     branches:
+#       - main
+#       - develop
+#   pull_request:
+#     branches:
+#       - main
+#       - develop
+#       - feature/*
+
+# jobs:
+#   parse-variables:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+          
+#       - name: Set Variables
+#         run: |
+#           if [[ ${{ github.ref }} == refs/heads/main* ]]; then
+#             export variables=parameters/variables-dev.json
+#           elif [[ ${{ github.ref }} == refs/heads/test* ]]; then
+#             export variables=parameters/variables-test.json
+#           elif [[ ${{ github.ref }} == refs/heads/production* ]]; then
+#             export variables=parameters/variables-prod.json
+#           else
+#             export variables=parameters/variables-dev.json
+#           fi
+#           export variables=$(jq -r . < $variables)
+#         env:
+#           variables: ${{ env.variables }}
+          
+#       - name: Print Variables
+#         run: echo "${{ env.variables }}"
