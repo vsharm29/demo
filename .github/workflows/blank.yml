@@ -26,10 +26,13 @@ jobs:
             export filename=variables-dev.json
           elif [[ ${{ github.ref }} == refs/heads/test* ]]; then
             export variables=parameters/variables-test.json
+            export filename=variables-test.json
           elif [[ ${{ github.ref }} == refs/heads/production* ]]; then
             export variables=parameters/variables-prod.json
+            export filename=variables-prod.json
           else
             export variables=parameters/variables-dev.json
+            export filename=variables-dev.json
           fi
           export variables=$(jq -r . < $variables)
           echo "Variables set from $variables"
@@ -43,6 +46,7 @@ jobs:
 
       - name: Show output
         run: echo "The time was ${{ env.test_MY_VARIABLE }}"
+
 
 
 
