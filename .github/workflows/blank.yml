@@ -32,13 +32,13 @@ jobs:
           fi
           export variables=$(jq -r . < $variables)
           echo "Variables set from $variables"
+          echo "variables.MY_VARIABLE"
+          echo "$variables.MY_VARIABLE"
         env:
           variables: ${{ env.variables }}
           
       - name: Print Variables
-        run: echo "${{ steps.set-variables.outputs.variables }}"
-        env:
-          variables: ${{ steps.set-variables.outputs.variables }}
+        run: echo "${{ env.variables }}"
 
 
 
