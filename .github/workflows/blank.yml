@@ -3,13 +3,13 @@ name: Demo
 on:
   push:
     branches:
-    - main
-    - develop
+      - main
+      - develop
   pull_request:
     branches:
-    - main
-    - develop
-    - feature/*
+      - main
+      - develop
+      - feature/*
 
 jobs:
   parse-variables:
@@ -18,16 +18,16 @@ jobs:
       - name: Set Variables
         run: |
           if [[ ${{ github.ref }} == refs/heads/main* ]]; then
-            export variables=parameters/variables-dev.json
+            export VARIABLES=parameters/variables-dev.json
           elif [[ ${{ github.ref }} == refs/heads/test* ]]; then
-            export variables=parameters/variables-test.json
+            export VARIABLES=parameters/variables-test.json
           elif [[ ${{ github.ref }} == refs/heads/production* ]]; then
-            export variables=parameters/variables-prod.json
+            export VARIABLES=parameters/variables-prod.json
           else
-            export variables=parameters/variables-dev.json
+            export VARIABLES=parameters/variables-dev.json
           fi
         env:
-          variables: ${{ env.variables }}
+          VARIABLES: ${{ env.VARIABLES }}
 
       - name: Print Variables
-        run: echo "${{ env.variables }}"
+        run: echo "$VARIABLES"
