@@ -21,15 +21,15 @@ jobs:
       - name: Set Variables
         run: |
           if [[ ${{ github.ref }} == refs/heads/main* ]]; then
-            export variables=parameters/variables-dev.json
+            export variables=$(jq -r . < parameters/variables-dev.json)
           elif [[ ${{ github.ref }} == refs/heads/test* ]]; then
-            export variables=parameters/variables-test.json
+            export variables=$(jq -r . < parameters/variables-dev.json)
           elif [[ ${{ github.ref }} == refs/heads/production* ]]; then
-            export variables=parameters/variables-prod.json
+            export variables=$(jq -r . < parameters/variables-dev.json)
           else
-            export variables=parameters/variables-dev.json
+            export variables=$(jq -r . < parameters/variables-dev.json)
           fi
-          export variables=$(cat $variables)
+          
         env:
           variables: ${{ env.variables }}
           
