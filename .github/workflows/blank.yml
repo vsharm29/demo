@@ -21,7 +21,7 @@ jobs:
       - name: Read variables from JSON
         id: read-json
         run: |
-          echo "::set-output name=variables::$(cat parameters/variables.json)"
+          echo "::set-output name=variables::$(cat parameters/variables-dev.json)"
         env:
           variables: ${{ env.variables }}
           
