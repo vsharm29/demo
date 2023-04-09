@@ -22,25 +22,21 @@ jobs:
       - name: Set Variables
         run: |
           if [[ ${{ github.ref }} == refs/heads/main* ]]; then
-            export variables=parameters/variables-dev.json
-            export filename=variables-dev.json
+            variables="parameters/variables-dev.json"
           elif [[ ${{ github.ref }} == refs/heads/test* ]]; then
             export variables=parameters/variables-test.json
-            export filename=variables-test.json
           elif [[ ${{ github.ref }} == refs/heads/production* ]]; then
             export variables=parameters/variables-prod.json
-            export filename=variables-prod.json
           else
             export variables=parameters/variables-dev.json
-            export filename=variables-dev.json
           fi
-          export variables=$(jq -r . < $variables)
-          echo "Variables set from $variables"
+          # export variables=$(jq -r . < $variables)
+          # echo "Variables set from $variables"
 
       - name: JSON to variables
         uses: rgarcia-phi/json-to-variables@v1.1.0
         with:
-          filename: ${{ env.filename }}
+          filename: $variables
           prefix: MY
           masked: true
 
