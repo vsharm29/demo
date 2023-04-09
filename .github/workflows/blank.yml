@@ -18,15 +18,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
           
-      - name: Read variables from JSON
-        id: read-json
+      - name: Set Variables
         run: |
-          echo "::set-output name=variables::$(cat parameters/variables-dev.json)"
+          if [[ ${{ github.ref }} == refs/heads/main* ]]; then
+            export variables=parameters/variables-dev.json
+          elif [[ ${{ github.ref }} == refs/heads/test* ]]; then
+            export variables=parameters/variables-test.json
+          elif [[ ${{ github.ref }} == refs/heads/production* ]]; then
+            export variables=parameters/variables-prod.json
+          else
+            export variables=parameters/variables-dev.json
+          fi
+          export variables=$(jq -r . < $variables)
+          echo "Variables set from $variables"
         env:
           variables: ${{ env.variables }}
           
       - name: Print Variables
-        run: echo "${{ steps.read-json.outputs.variables }}"
+        run: echo "${{ env.variables }}"
 
 
 
