@@ -32,10 +32,11 @@ jobs:
           fi
           export variables=$(jq -r . < $variables)
           echo "Variables set from $variables"
+
       - name: JSON to variables
         uses: rgarcia-phi/json-to-variables@v1.1.0
         with:
-          filename: 'variables'
+          filename: $variables
           prefix: test
           masked: true
 
