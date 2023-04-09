@@ -28,6 +28,8 @@ jobs:
           fi
         env:
           VARIABLES: ${{ env.VARIABLES }}
+      - name: Manual
+        run: export Hello=233
 
       - name: Print Variables
-        run: echo "$VARIABLES"
+        run: echo "$Hello"
