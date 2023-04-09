@@ -40,7 +40,7 @@ jobs:
       - name: JSON to variables
         uses: rgarcia-phi/json-to-variables@v1.1.0
         with:
-          filename: $filename
+          filename: variables-dev.json
           prefix: test
           masked: true
 
