@@ -29,8 +29,9 @@ jobs:
           else
             export variables=parameters/variables-dev.json
           fi
+          export variables=$(jq -r . < $variables)
         env:
           variables: ${{ env.variables }}
           
       - name: Print Variables
-        run: echo "$variables"
+        run: echo "${{ env.variables }}"
