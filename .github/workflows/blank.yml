@@ -23,6 +23,7 @@ jobs:
         run: |
           if [[ ${{ github.ref }} == refs/heads/main* ]]; then
             export variables=parameters/variables-dev.json
+            export filename=variables-dev.json
           elif [[ ${{ github.ref }} == refs/heads/test* ]]; then
             export variables=parameters/variables-test.json
           elif [[ ${{ github.ref }} == refs/heads/production* ]]; then
@@ -36,7 +37,7 @@ jobs:
       - name: JSON to variables
         uses: rgarcia-phi/json-to-variables@v1.1.0
         with:
-          filename: $variables
+          filename: $filename
           prefix: test
           masked: true
 
