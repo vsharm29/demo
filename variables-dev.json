@@ -1,0 +1,11 @@
+{
+    "MY_VARIABLE": "my_value",
+    "ANOTHER_VARIABLE": 123,
+    "YET_ANOTHER_VARIABLE": true,
+    "ARRAY_VARIABLE": ["value1", "value2", "value3"],
+    "OBJECT_VARIABLE": {
+      "KEY1": "value1",
+      "KEY2": "value2"
+    }
+  }
+  
