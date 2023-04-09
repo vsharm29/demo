@@ -1,0 +1,33 @@
+name: Demo
+
+on:
+  push:
+    branches:
+    - main
+    - develop
+  pull_request:
+    branches:
+    - main
+    - develop
+    - feature/*
+
+jobs:
+  parse-variables:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Variables
+        run: |
+          if [[ ${{ github.ref }} == refs/heads/main* ]]; then
+            export variables=parameters/variables-dev.json
+          elif [[ ${{ github.ref }} == refs/heads/test* ]]; then
+            export variables=parameters/variables-test.json
+          elif [[ ${{ github.ref }} == refs/heads/production* ]]; then
+            export variables=parameters/variables-prod.json
+          else
+            export variables=parameters/variables-dev.json
+          fi
+        env:
+          variables: ${{ env.variables }}
+          
+      - name: Print Variables
+        run: echo "Variables file: $variables"
