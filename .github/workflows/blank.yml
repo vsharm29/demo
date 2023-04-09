@@ -30,29 +30,12 @@ jobs:
             export variables=parameters/variables-dev.json
           fi
           export variables=$(jq -r . < $variables)
-          export MY_VARIABLE=$(jq -r '.MY_VARIABLE' <<< $variables)
-          export ANOTHER_VARIABLE=$(jq -r '.ANOTHER_VARIABLE' <<< $variables)
-          export YET_ANOTHER_VARIABLE=$(jq -r '.YET_ANOTHER_VARIABLE' <<< $variables)
-          export ARRAY_VARIABLE=$(jq -r '.ARRAY_VARIABLE | join(",")' <<< $variables)
-          export OBJECT_VARIABLE=$(jq -r '.OBJECT_VARIABLE | tojson' <<< $variables)
-
+          echo "Variables set from $variables"
         env:
-          MY_VARIABLE: ${{ env.MY_VARIABLE }}
-          ANOTHER_VARIABLE: ${{ env.ANOTHER_VARIABLE }}
-          YET_ANOTHER_VARIABLE: ${{ env.YET_ANOTHER_VARIABLE }}
-          ARRAY_VARIABLE: ${{ env.ARRAY_VARIABLE }}
-          OBJECT_VARIABLE: ${{ env.OBJECT_VARIABLE }}
+          variables: ${{ env.variables }}
           
       - name: Print Variables
-        run: echo "$ANOTHER_VARIABLE"
-        env:
-          MY_VARIABLE: ${{ env.MY_VARIABLE }}
-          ANOTHER_VARIABLE: ${{ env.ANOTHER_VARIABLE }}
-          YET_ANOTHER_VARIABLE: ${{ env.YET_ANOTHER_VARIABLE }}
-          ARRAY_VARIABLE: ${{ env.ARRAY_VARIABLE }}
-          OBJECT_VARIABLE: ${{ env.OBJECT_VARIABLE }}
-
-
+        run: echo "${{ env.variables }}"
 
 
 
