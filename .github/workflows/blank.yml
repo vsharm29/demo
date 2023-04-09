@@ -21,22 +21,26 @@ jobs:
       - name: Set Variables
         run: |
           if [[ ${{ github.ref }} == refs/heads/main* ]]; then
-            export variables=$(jq -r . < parameters/variables-dev.json)
+            export variables=parameters/variables-dev.json
           elif [[ ${{ github.ref }} == refs/heads/test* ]]; then
-            export variables=$(jq -r . < parameters/variables-dev.json)
+            export variables=parameters/variables-test.json
           elif [[ ${{ github.ref }} == refs/heads/production* ]]; then
-            export variables=$(jq -r . < parameters/variables-dev.json)
+            export variables=parameters/variables-prod.json
           else
-            export variables=$(jq -r . < parameters/variables-dev.json)
+            export variables=parameters/variables-dev.json
           fi
-          
+          export variables=$(jq -r . < $variables)
+          export MY_VARIABLE=$(jq -r '.MY_VARIABLE' <<< $variables)
+          export ANOTHER_VARIABLE=$(jq -r '.ANOTHER_VARIABLE' <<< $variables)
+          export YET_ANOTHER_VARIABLE=$(jq -r '.YET_ANOTHER_VARIABLE' <<< $variables)
+          export ARRAY_VARIABLE=$(jq -r '.ARRAY_VARIABLE | join(",")' <<< $variables)
+          export OBJECT_VARIABLE=$(jq -r '.OBJECT_VARIABLE | tojson' <<< $variables)
+
         env:
           variables: ${{ env.variables }}
           
       - name: Print Variables
         run: echo "${{ env.variables }}"
-
-
 
 
 
