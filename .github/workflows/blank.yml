@@ -41,11 +41,10 @@ jobs:
         uses: rgarcia-phi/json-to-variables@v1.1.0
         with:
           filename: parameters/variables-dev.json
-          prefix: test
           masked: true
 
       - name: Show output
-        run: echo "The time was ${{ env.test_MY_VARIABLE }}"
+        run: echo "The time was ${{ env.MY_VARIABLE }}"
 
 
 
